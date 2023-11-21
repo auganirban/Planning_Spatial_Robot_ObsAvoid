@@ -12,7 +12,7 @@ function [rot_err, pos_err] = distDQ(q1, q2)
     pos_err = norm(t_quat1(2:4) - t_quat2(2:4));
 %     t_quat1
 %     t_quat2
-% % %     fprintf("Position Error: %2.6f, Rotation Error: %2.6f \n", pos_err, rot_err);
+    fprintf("Position Error: %2.6f, Rotation Error: %2.6f \n", pos_err, rot_err);
 end
 
 % Anik's implementation

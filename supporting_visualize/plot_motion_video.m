@@ -40,15 +40,15 @@ function[] =  plot_motion_video(hfig, myVideo)
     if ~isempty(grasped_box)
         count_grasped = 1;
     end
-% % %     line_obj_arr = []; obj_count = 1;
-% % %     for i = 1:7+count_grasped
-% % %         cnt_pts = contact_pts_array(:, :, i);
-% % % 
-% % %         % Plot the closest point pair
-% % %         line_obj_arr(obj_count) = plot3([cnt_pts(1, 1), cnt_pts(1, 2)], [cnt_pts(2, 1), cnt_pts(2, 2)], [cnt_pts(3, 1), cnt_pts(3, 2)], 'ko');
-% % %         line_obj_arr(obj_count+1) = plot3([cnt_pts(1, 1), cnt_pts(1, 2)], [cnt_pts(2, 1), cnt_pts(2, 2)], [cnt_pts(3, 1), cnt_pts(3, 2)], 'g');
-% % %         obj_count = obj_count + 2;
-% % %     end
+    line_obj_arr = []; obj_count = 1;
+    for i = 1:7+count_grasped
+        cnt_pts = contact_pts_array(:, :, i);
+
+        % Plot the closest point pair
+        line_obj_arr(obj_count) = plot3([cnt_pts(1, 1), cnt_pts(1, 2)], [cnt_pts(2, 1), cnt_pts(2, 2)], [cnt_pts(3, 1), cnt_pts(3, 2)], 'ko');
+        line_obj_arr(obj_count+1) = plot3([cnt_pts(1, 1), cnt_pts(1, 2)], [cnt_pts(2, 1), cnt_pts(2, 2)], [cnt_pts(3, 1), cnt_pts(3, 2)], 'g');
+        obj_count = obj_count + 2;
+    end
     
 %     % Plot end effector poses
 %     if mod(count, 10) == 0
@@ -75,9 +75,9 @@ function[] =  plot_motion_video(hfig, myVideo)
     delete(link1); delete(link2); delete(link3); delete(link4); delete(link5);
     delete(link6); delete(link7); delete(offset1); delete(offset2); delete(offset3);
     
-% % %     for i = 1:obj_count-1
-% % %         delete(line_obj_arr(i));
-% % %     end
+    for i = 1:obj_count-1
+        delete(line_obj_arr(i));
+    end
     
     if ~isempty(grasped_obj_vertx)
         delete(grasp_plane1); delete(grasp_plane2); delete(grasp_plane3);

@@ -9,11 +9,11 @@ function[achieved_goal, achieved_goalDQ, achieved_jointvec, theta_SCLERP] = get2
     count = 1; reach_dist = 0.001; rot_dist = 0.001;
     prev_position_err = 100; prev_rotation_err = 100;
     
-% % %     % Plot local start and goal
-% % %     g_init = DQ2Mat(A); g_finl = DQ2Mat(B);
-% % %     pt_ls = scatter3(g_init(1, 4), g_init(2, 4), g_init(3, 4), 'k', 'filled');
-% % %     hold on;
-% % %     pt_lg = scatter3(g_finl(1, 4), g_finl(2, 4), g_finl(3, 4), 'k', 'filled');
+    % Plot local start and goal
+    g_init = DQ2Mat(A); g_finl = DQ2Mat(B);
+    pt_ls = scatter3(g_init(1, 4), g_init(2, 4), g_init(3, 4), 'k', 'filled');
+    hold on;
+    pt_lg = scatter3(g_finl(1, 4), g_finl(2, 4), g_finl(3, 4), 'k', 'filled');
     
     % Set the bounds of unknowns for PATH Solver
     for j = 1 : 14
@@ -26,7 +26,7 @@ function[achieved_goal, achieved_goalDQ, achieved_jointvec, theta_SCLERP] = get2
     % Main loop of iterative motion plan using PATH solver
     currentDQ = A;
     finalDQ = B;
-    [g, ~, ~, ~, g_intermediate] = FK_RealBaxter(q_o);
+    [g, ~, ~, ~, g_intermediate] = FK_URDF(q_o);
     not_reached_flag = true;
     theta_SCLERP = [];
     theta_SCLERP(:, count) = q_o;
@@ -35,13 +35,13 @@ function[achieved_goal, achieved_goalDQ, achieved_jointvec, theta_SCLERP] = get2
         % Compute g_tau and DQ tau    
         [~, ResDQ] = Screw_Lin(currentDQ, finalDQ, Tau);
         % Move end effector to g_tau by approximating joint angles   
-        J_st = JS_RealBaxter(q_o);
+        J_st = JS_URDF(q_o);
         [thetha_next, v_ts2js] = theta_next_step2(J_st, g, ResDQ, q_o, beta);
 %         [contact_normal, dista, jcon_array] = get_collision_info4(g_intermediate, box_vertices_array, box_normals_array);
         [contact_normal, dista, jcon_array] = get_collision_info4_graspobj(g_intermediate, box_vertices_array, box_normals_array);
         [z, ~, ~] = pathmcp(z, l, u, 'mcpfuncjacEval');
         q_o = z(1:dof);
-        [g, ~, ~, ~, g_intermediate] = FK_RealBaxter(q_o);
+        [g, ~, ~, ~, g_intermediate] = FK_URDF(q_o);
         currentDQ = Mat2DQ(g);
         count = count+1;
         theta_SCLERP(:, count) = q_o;
@@ -67,8 +67,8 @@ function[achieved_goal, achieved_goalDQ, achieved_jointvec, theta_SCLERP] = get2
         plot_motion_video(hfig, myVideo);
 %         plot_motion(hfig);
     end
-    
-% % %     delete(pt_ls); delete(pt_lg);
+     
+    delete(pt_ls); delete(pt_lg);
     
     achieved_goal = g;
     achieved_goalDQ = currentDQ;

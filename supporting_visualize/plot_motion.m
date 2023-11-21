@@ -4,7 +4,7 @@ function[] =  plot_motion(hfig)
     global link4_cylinder4; global link5_cylinder5; global link6_cylinder6;
     global link7_cylinder7; global link8_cylinder8; global link9_cylinder9;
     global link10_cylinder10; global n_pts; global g; global contact_pts_array;
-    global count; global grasped_obj_vertx; global grasped_box; global dof; global num_links_ignore;
+    global count; global grasped_obj_vertx; global grasped_box;
     
     %/////////////////////////////////////////////////////////////
     %///////////////////// Plotting //////////////////////////////
@@ -41,7 +41,7 @@ function[] =  plot_motion(hfig)
         count_grasped = 1;
     end
     line_obj_arr = []; obj_count = 1;
-    for i = 1:dof-num_links_ignore+count_grasped
+    for i = 1:7+count_grasped
         cnt_pts = contact_pts_array(:, :, i);
 
         % Plot the closest point pair
@@ -83,9 +83,9 @@ function[] =  plot_motion(hfig)
         delete(grasp_plane1); delete(grasp_plane2); delete(grasp_plane3);
         delete(grasp_plane4); delete(grasp_plane5); delete(grasp_plane6);
     end
-    
-% % %     for i = 1:8
-% % %         delete(frame_obj_arr(i));
-% % %     end
-% % %     drawnow;
+%     
+% %     for i = 1:8
+% %         delete(frame_obj_arr(i));
+% %     end
+% %     drawnow;
 end

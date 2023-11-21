@@ -24,7 +24,6 @@ function [thetha_next, ip_task2js] = theta_next_step2( J_s, g_t, result, theta_t
 
     B = J_s'*((J_s*J_s')\J2);      
     ip_task2js = beta * B * (gamma_th - gamma_t);
-    
     % Check all joint angle changes are within a threshold
     dth = threshold_dtheta(ip_task2js);
     ip_task2js = dth;

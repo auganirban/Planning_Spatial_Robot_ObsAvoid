@@ -3,18 +3,9 @@ clear;
 close all;
 clearvars -global;
 
-% Input: Theta_initial, Goal_pose
-% Output: Sequence of joint angle vectors.
-% Date: Novemver 27th., 2019.
-% Brief description: Manipulator holding a rectangular box should move from
-% its given start to a desired goal pose while always trying to move
-% towards goal but avoiding obstacle in tis path if any. The initial and
-% goal poses are at the two opposite sides of a wall and the robot has to
-% move through the window opening in the wall.
-
 % Add path to PATH solver
 addpath("../supporting_quatlib"); addpath("../supporting_colli_funcs");
-addpath("../supporting_kinlib");  addpath("../pathmexa64"); addpath("../supporting_colli_models");
+addpath("../supporting_kinlib");  addpath("../pathmex"); addpath("../supporting_colli_models");
 addpath("../supporting_visualize");
 
 % Define global variables
